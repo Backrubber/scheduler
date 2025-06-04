@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/user/cal")
 public class UserCalendarController {
     //Service classes would've been ideal, but while learning how to use REST Api we forgot about it
     @Autowired
@@ -21,7 +21,7 @@ public class UserCalendarController {
     private JwtUtil jwtUtil;
 
     //This handles a Post request on localhost:8080/user, where the jwt token and body are used to append a new date
-    @PostMapping("/addCal")
+    @PostMapping("/add")
     public String registerDate(@RequestHeader("Authorization") String bearerToken, @RequestBody Calendar calendar)
     {
         //parse out the token
@@ -38,14 +38,14 @@ public class UserCalendarController {
         return "Date has been registered!";
     }
 
-    @GetMapping("/getCal")
+    @GetMapping("/get")
     public List<Calendar> fetchDate(@RequestHeader("Authorization") String bearerToken)
     {
         bearerToken = bearerToken.replace("Bearer ", "");
         return calendarRepository.findCalendarByUser(userRepository.findByUsername(jwtUtil.getUsernameFromToken(bearerToken)));
     }
 
-    @PutMapping("/updateCal/{id}")
+    @PutMapping("/put/{id}")
     public String updateCalendar(@RequestHeader("Authorization") String bearerToken, @PathVariable Long id) {
         bearerToken = bearerToken.replace("Bearer ", "");
         Calendar updateCalendar=calendarRepository.findById(id).orElse(null);
