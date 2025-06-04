@@ -16,19 +16,24 @@ import java.util.Date;
 @AllArgsConstructor
 @Entity
 @Table(name = "calendar")
-@JsonIgnoreProperties({"id", "user"})
+@JsonIgnoreProperties({"user"})
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String titleAppointment;
+    private String title;
+    private String description;
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime date;
+    private boolean finished;
+
+    //Make a new column that acts as a foreign key for the User table
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId")
     private User user;
-    public Calendar(String titleAppointment, LocalDateTime date) {
-        this.titleAppointment = titleAppointment;
+    public Calendar(String title, String description, LocalDateTime date) {
+        this.title = title;
+        this.description = description;
         this.date = date;
     }
 }
