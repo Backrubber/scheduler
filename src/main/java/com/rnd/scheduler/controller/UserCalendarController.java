@@ -37,14 +37,12 @@ public class UserCalendarController {
         calendarRepository.save(newCalendar);
         return "Date has been registered!";
     }
-
     @GetMapping("/get")
     public List<Calendar> fetchDate(@RequestHeader("Authorization") String bearerToken)
     {
         bearerToken = bearerToken.replace("Bearer ", "");
         return calendarRepository.findCalendarByUser(userRepository.findByUsername(jwtUtil.getUsernameFromToken(bearerToken)));
     }
-
     @PutMapping("/put/{id}")
     public String updateCalendar(@RequestHeader("Authorization") String bearerToken, @PathVariable Long id) {
         bearerToken = bearerToken.replace("Bearer ", "");
