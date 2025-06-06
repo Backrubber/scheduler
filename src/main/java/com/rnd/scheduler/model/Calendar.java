@@ -6,9 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -17,6 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "calendar")
 @JsonIgnoreProperties({"user"})
+//Entity class for the layout of the calendar table
 public class Calendar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

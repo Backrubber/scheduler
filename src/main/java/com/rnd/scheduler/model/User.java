@@ -6,7 +6,6 @@ import lombok.*;
 import org.hibernate.mapping.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -14,6 +13,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name = "users")
+//Entity class for the layout of the users table
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/user/cal")
 public class UserCalendarController {
-    //Service classes would've been ideal, but while learning how to use REST Api we forgot about it
+    //Here we call the define the repositories and wire them so that we can communicate with the server
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -37,31 +37,14 @@ public class UserCalendarController {
         calendarRepository.save(newCalendar);
         return "Date has been registered!";
     }
+    //Get request handler that returns users Calendar data according to their token
     @GetMapping("/get")
     public List<Calendar> fetchDate(@RequestHeader("Authorization") String bearerToken)
     {
         bearerToken = bearerToken.replace("Bearer ", "");
         return calendarRepository.findCalendarByUser(userRepository.findByUsername(jwtUtil.getUsernameFromToken(bearerToken)));
     }
-    /* Old calendar update, newer version at the bottom
-    @PutMapping("/put/{id}")
-    public String updateCalendar(@RequestHeader("Authorization") String bearerToken, @PathVariable Long id) {
-        bearerToken = bearerToken.replace("Bearer ", "");
-        Calendar updateCalendar=calendarRepository.findById(id).orElse(null);
-        if(updateCalendar!=null)
-        {
-            System.out.println("hi");
-            if(updateCalendar.getUser().getUsername().equals(jwtUtil.getUsernameFromToken(bearerToken)))
-            {
-                System.out.println("ho");
-                updateCalendar.setFinished(true);
-                calendarRepository.save(updateCalendar);
-                return "Calendar has been updated!";
-            }
-        }
-        return "Could not update calendar!";
-    }
-    */
+    //Delete request handler for Tasks within the Calendar table
     @DeleteMapping("/delete/{id}")
     public String deleteCalendar(@RequestHeader("Authorization") String bearerToken, @PathVariable Long id) {
         bearerToken = bearerToken.replace("Bearer ", "");
@@ -74,6 +57,7 @@ public class UserCalendarController {
 
         return "Could not delete calendar!";
     }
+    //Put request handler for changing calendar information
     @PutMapping("/edit/{id}")
     public String editCalendar(
         @RequestHeader("Authorization") String bearerToken,

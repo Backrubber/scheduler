@@ -16,13 +16,13 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    //Token stays active for one hour
     @Value("${jwt.expiration}")
     private int jwtExpirationMs;
 
     private SecretKey key;
 
-    // Initializes the key after the class is instantiated and the jwtSecret is injected,
-    // preventing the repeated creation of the key and enhancing performance
+    // Creates a reusable signing key to avoid regenerating it on every call
     @PostConstruct
     public void init() {
         this.key = Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
@@ -38,7 +38,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Get username from JWT token
+    // Get the username from JWT token
     public String getUsernameFromToken(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(key).build()

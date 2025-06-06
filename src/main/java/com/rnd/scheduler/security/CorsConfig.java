@@ -10,10 +10,11 @@ import java.util.List;
 @Configuration
 public class CorsConfig {
 
+    //Configuration for Cross origin requests, so that the app could be used on web
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:8081")); // Expo web origin
+        config.setAllowedOrigins(List.of("http://localhost:8081")); // Our expo web origin
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true); // If using Authorization header or cookies

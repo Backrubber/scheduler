@@ -19,6 +19,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtils;
     @Autowired
     private CustomUserDetailsService userDetailsService;
+    /**
+     * This method is executed once per request. It checks for a valid JWT token in the request header,
+     * validates it, and sets the authentication in the security context if valid.
+     */
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -44,6 +48,10 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         }
         filterChain.doFilter(request, response);
     }
+    /**
+     * Extracts the JWT token from the "Authorization" header of the request.
+     * The expected format is: "Bearer <token>"
+     */
     private String parseJwt(HttpServletRequest request) {
         String headerAuth = request.getHeader("Authorization");
         if (headerAuth != null && headerAuth.startsWith("Bearer ")) {

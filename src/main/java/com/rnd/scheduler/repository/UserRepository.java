@@ -12,12 +12,18 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
     boolean existsByUsername(String username);
+
+    //Here we can create custom queries that are performed through these functions, used in the controller class
+
     @Query(value="SELECT s.id FROM User s where s.username=:user")
     Long findUserId(@Param("user") String user);
+
     @Query(value="SELECT s.groupId FROM User s where s.username=:user")
     Long findGroupId(@Param("user") String user);
+
     @Query(value="SELECT s FROM User s where s.groupId=:id")
     List<User> findUsersByGroupId(@Param("id") Long id);
+
     @Query(value="UPDATE User s SET s.groupId=:groupId where s.username=:user")
     void updateUser(@Param("user") String user, @Param("groupId") Long groupId);
 }
