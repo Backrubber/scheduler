@@ -36,6 +36,14 @@ public class Calendar {
         this.description = description;
         this.date = date;
     }
+
+    public boolean getIsFinished() {
+        return finished;
+    }
+
+    public void setIsFinished(boolean finished) {
+        this.finished = finished;
+    }
 }
 
 
